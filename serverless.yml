@@ -1,0 +1,28 @@
+
+service: aws-cost-report-slack
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: "ce:GetCostAndUsage"
+      Resource: "*"
+
+functions:
+  main:
+    handler: index.handler
+
+    events:
+      - schedule: ${opt:schedule, self:custom.schedule}
+
+    environment:
+      WEBHOOK_URL: ${opt:webhook-url}
+      SLACK_USERNAME: ${opt:slack-username, ""}
+      SLACK_ICON_URL: ${opt:slack-icon-url, ""}
+      SLACK_ICON_EMOJI: ${opt:slack-icon-emoji, ""}
+      SLACK_CHANNEL: ${opt:slack-channel, ""}
+
+custom:
+  schedule: cron(30 0 * * ? *)
