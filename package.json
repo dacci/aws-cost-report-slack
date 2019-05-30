@@ -4,11 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.459.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7"
   },
   "devDependencies": {
+    "aws-sdk": "^2.437.0",
     "eslint": "^5.16.0",
     "eslint-config-google": "^0.13.0",
     "husky": "^2.3.0",
