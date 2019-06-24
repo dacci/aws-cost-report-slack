@@ -18,11 +18,11 @@ const byAmountDescTaxLast = (a, b) => {
   return b.value - a.value;
 };
 
-const groupToField = (group) => ({
-  title: group.key,
-  value: group.text,
-  short: false,
-});
+const groupsToFields = (fields, group) => {
+  fields.push({type: 'mrkdwn', text: `*${group.key}*`});
+  fields.push({type: 'plain_text', text: group.text});
+  return fields;
+};
 
 exports.handler = async (event, context) => {
   if (!process.env.WEBHOOK_URL) {
@@ -58,11 +58,21 @@ exports.handler = async (event, context) => {
 
   const total = groups.reduce((total, group) => total + group.value, 0);
   const body = {
-    attachments: [
+    text: `Yesterday's cost was ${total} USD.`,
+    blocks: [
       {
-        fallback: `Total cost on ${start} was ${total} USD.`,
-        pretext: `Total cost on ${start} was ${total} USD.`,
-        fields: groups.map(groupToField),
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `Total cost on ${start} was ${total} USD.`,
+        },
+      },
+      {
+        type: 'divider',
+      },
+      {
+        type: 'section',
+        fields: groups.reduce(groupsToFields, []),
       },
     ],
   };
