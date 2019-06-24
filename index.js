@@ -24,6 +24,17 @@ const groupsToFields = (fields, group) => {
   return fields;
 };
 
+const round = (number, precision) => {
+  const shift = (number, precision, reverse) => {
+    if (reverse) precision = -precision;
+    const numArray = ('' + number).split('e');
+    return +(numArray[0] + 'e' + (
+      numArray[1] ? (+numArray[1] + precision) : precision));
+  };
+
+  return shift(Math.round(shift(number, precision, false)), precision, true);
+};
+
 exports.handler = async (event, context) => {
   if (!process.env.WEBHOOK_URL) {
     throw new Error('WEBHOOK_URL is not specified or invalid.');
@@ -58,7 +69,7 @@ exports.handler = async (event, context) => {
 
   const total = groups.reduce((total, group) => total + group.value, 0);
   const body = {
-    text: `Yesterday's cost was ${total} USD.`,
+    text: `Yesterday's cost was ${round(total, 4)} USD.`,
     blocks: [
       {
         type: 'section',
