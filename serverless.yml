@@ -20,10 +20,6 @@ functions:
     environment:
       WEBHOOK_URL: ${opt:webhook-url}
       GRANULARITY: ${self:custom.granularity}
-      SLACK_USERNAME: ${opt:slack-username, ""}
-      SLACK_ICON_URL: ${opt:slack-icon-url, ""}
-      SLACK_ICON_EMOJI: ${opt:slack-icon-emoji, ""}
-      SLACK_CHANNEL: ${opt:slack-channel, ""}
 
 custom:
   schedule:

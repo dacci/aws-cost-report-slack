@@ -109,21 +109,5 @@ exports.handler = async (event, context) => {
     });
   }
 
-  if (process.env.SLACK_USERNAME) {
-    body.username = process.env.SLACK_USERNAME;
-  }
-
-  if (process.env.SLACK_ICON_URL) {
-    body.icon_url = process.env.SLACK_ICON_URL;
-  }
-
-  if (process.env.SLACK_ICON_EMOJI) {
-    body.icon_emoji = process.env.SLACK_ICON_EMOJI;
-  }
-
-  if (process.env.SLACK_CHANNEL) {
-    body.channel = process.env.SLACK_CHANNEL;
-  }
-
   return request.post({json: true, url: process.env.WEBHOOK_URL, body});
 };
