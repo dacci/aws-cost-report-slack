@@ -15,14 +15,18 @@ functions:
     handler: index.handler
 
     events:
-      - schedule: ${opt:schedule, self:custom.schedule}
+      - schedule: ${opt:schedule, self:custom.schedule.${self:custom.granularity}}
 
     environment:
       WEBHOOK_URL: ${opt:webhook-url}
+      GRANULARITY: ${self:custom.granularity}
       SLACK_USERNAME: ${opt:slack-username, ""}
       SLACK_ICON_URL: ${opt:slack-icon-url, ""}
       SLACK_ICON_EMOJI: ${opt:slack-icon-emoji, ""}
       SLACK_CHANNEL: ${opt:slack-channel, ""}
 
 custom:
-  schedule: cron(30 0 * * ? *)
+  schedule:
+    DAILY: 'cron(30 0 * * ? *)'
+    MONTHLY: 'cron(30 0 1 * ? *)'
+  granularity: ${opt:granularity, 'DAILY'}

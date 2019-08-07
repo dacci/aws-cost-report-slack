@@ -3,6 +3,32 @@
 const AWS = require('aws-sdk');
 const request = require('request-promise-native');
 
+const getTimePeriod = () => {
+  let start = null;
+  let end = new Date();
+
+  switch (process.env.GRANULARITY) {
+    case 'DAILY': {
+      start = new Date(end.getFullYear(), end.getMonth(), end.getDate() - 1);
+      break;
+    }
+
+    case 'MONTHLY': {
+      end = new Date(end.getFullYear(), end.getMonth(), 1);
+      start = new Date(end.getFullYear(), end.getMonth() - 1, 1);
+      break;
+    }
+
+    default:
+      throw new Error('Invalid granularity');
+  }
+
+  return {
+    Start: start.toISOString().substr(0, 10),
+    End: end.toISOString().substr(0, 10),
+  };
+};
+
 const transformGroup = (group) => ({
   key: group.Keys[0],
   value: parseFloat(group.Metrics.AmortizedCost.Amount),
@@ -40,18 +66,10 @@ exports.handler = async (event, context) => {
     throw new Error('WEBHOOK_URL is not specified or invalid.');
   }
 
-  const end = new Date().toISOString().substring(0, 10);
-  let start = new Date();
-  start.setDate(start.getDate() - 1);
-  start = start.toISOString().substring(0, 10);
-
   const explorer = new AWS.CostExplorer({region: 'us-east-1'});
   const groups = await explorer.getCostAndUsage({
-    TimePeriod: {
-      Start: start,
-      End: end,
-    },
-    Granularity: 'DAILY',
+    TimePeriod: getTimePeriod(),
+    Granularity: process.env.GRANULARITY,
     Metrics: [
       'AmortizedCost',
     ],
@@ -75,7 +93,7 @@ exports.handler = async (event, context) => {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `Total cost on ${start} was ${total} USD.`,
+          text: `Total cost was ${total} USD.`,
         },
       },
       {
