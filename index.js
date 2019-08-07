@@ -81,12 +81,15 @@ exports.handler = async (event, context) => {
       {
         type: 'divider',
       },
-      {
-        type: 'section',
-        fields: groups.reduce(groupsToFields, []),
-      },
     ],
   };
+
+  while (groups.length > 0) {
+    body.blocks.push({
+      type: 'section',
+      fields: groups.splice(0, 5).reduce(groupsToFields, []),
+    });
+  }
 
   if (process.env.SLACK_USERNAME) {
     body.username = process.env.SLACK_USERNAME;
