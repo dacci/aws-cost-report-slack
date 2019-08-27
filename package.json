@@ -12,7 +12,8 @@
     "eslint": "^6.2.2",
     "eslint-config-google": "^0.13.0",
     "husky": "^2.3.0",
-    "lint-staged": "^8.1.7"
+    "lint-staged": "^8.1.7",
+    "serverless-pseudo-parameters": "^2.4.0"
   },
   "lint-staged": {
     "*.js": [

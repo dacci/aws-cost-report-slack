@@ -22,3 +22,7 @@ serverless deploy --webhook-url https://hooks.slack.com/services/some/webhook/ur
 
   Specify when to report. Accepts [AWS schedule syntax](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html).
   Default is `cron(30 0 * * ? *)` for _DAILY_ granularity and `cron(30 0 1 * ? *)` for _MONTHLY_ granularity.
+
+* dlq (Optional)
+
+  Specify DLQ resource. Must be an ARN of SQS or SNS.

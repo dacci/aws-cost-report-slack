@@ -6,13 +6,24 @@ provider:
   runtime: nodejs10.x
 
   iamRoleStatements:
-    - Effect: "Allow"
-      Action: "ce:GetCostAndUsage"
-      Resource: "*"
+    - Effect: 'Allow'
+      Action: 'sqs:SendMessage'
+      Resource: 'arn:#{AWS::Partition}:sqs:#{AWS::Region}:#{AWS::AccountId}:*'
+    - Effect: 'Allow'
+      Action: 'sns:Publish'
+      Resource: 'arn:#{AWS::Partition}:sns:#{AWS::Region}:#{AWS::AccountId}:*'
+    - Effect: 'Allow'
+      Action: 'ce:GetCostAndUsage'
+      Resource: '*'
+
+plugins:
+  - serverless-pseudo-parameters
 
 functions:
   main:
     handler: index.handler
+    memorySize: 128
+    onError: ${opt:dlq, ''}
 
     events:
       - schedule: ${opt:schedule, self:custom.schedule.${self:custom.granularity}}
