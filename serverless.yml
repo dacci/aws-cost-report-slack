@@ -7,12 +7,6 @@ provider:
 
   iamRoleStatements:
     - Effect: 'Allow'
-      Action: 'sqs:SendMessage'
-      Resource: 'arn:#{AWS::Partition}:sqs:#{AWS::Region}:#{AWS::AccountId}:*'
-    - Effect: 'Allow'
-      Action: 'sns:Publish'
-      Resource: 'arn:#{AWS::Partition}:sns:#{AWS::Region}:#{AWS::AccountId}:*'
-    - Effect: 'Allow'
       Action: 'ce:GetCostAndUsage'
       Resource: '*'
 
