@@ -20,7 +20,8 @@ const getTimePeriod = () => {
     }
 
     default:
-      throw new Error('Invalid granularity');
+      console.error('Invalid granularity');
+      return;
   }
 
   return {
@@ -61,9 +62,10 @@ const round = (number, precision) => {
   return shift(Math.round(shift(number, precision, false)), precision, true);
 };
 
-exports.handler = async (event, context) => {
+exports.handler = async () => {
   if (!process.env.WEBHOOK_URL) {
-    throw new Error('WEBHOOK_URL is not specified or invalid.');
+    console.error('WEBHOOK_URL is not specified or invalid.');
+    return;
   }
 
   const explorer = new AWS.CostExplorer({region: 'us-east-1'});
@@ -83,7 +85,9 @@ exports.handler = async (event, context) => {
       .then((result) => result.ResultsByTime[0].Groups)
       .then((groups) => groups.map(transformGroup))
       .then((groups) => groups.filter(nonZeroGroupOnly))
-      .then((groups) => groups.sort(byAmountDescTaxLast));
+      .then((groups) => groups.sort(byAmountDescTaxLast))
+      .catch(console.error);
+  if (!groups) return;
 
   const total = groups.reduce((total, group) => total + group.value, 0);
   const body = {
@@ -109,5 +113,6 @@ exports.handler = async (event, context) => {
     });
   }
 
-  return request.post({json: true, url: process.env.WEBHOOK_URL, body});
+  return request.post({json: true, url: process.env.WEBHOOK_URL, body})
+      .then(console.log, console.error);
 };
