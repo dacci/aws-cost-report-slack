@@ -1,29 +1,26 @@
 {
   "name": "aws-cost-report-slack",
+  "license": "MIT",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
   "dependencies": {
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8"
   },
   "devDependencies": {
     "aws-sdk": "2.536.0",
-    "eslint": "*",
-    "eslint-config-google": "*",
-    "husky": "*",
-    "lint-staged": "*",
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.7",
     "serverless-pseudo-parameters": "*"
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ]
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix"
   }
 }
