@@ -10,9 +10,6 @@ provider:
       Action: 'ce:GetCostAndUsage'
       Resource: '*'
 
-plugins:
-  - serverless-pseudo-parameters
-
 functions:
   main:
     handler: index.handler
