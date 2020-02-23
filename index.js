@@ -1,7 +1,7 @@
 'use strict';
 
 const AWS = require('aws-sdk');
-const request = require('request-promise-native');
+const axios = require('axios').default;
 
 const getTimePeriod = () => {
   let start = null;
@@ -113,6 +113,7 @@ exports.handler = async () => {
     });
   }
 
-  return request.post({json: true, url: process.env.WEBHOOK_URL, body})
-      .then(console.log, console.error);
+  return axios.post(process.env.WEBHOOK_URL, body)
+      .then(({data}) => data)
+      .catch(console.error);
 };
