@@ -26,5 +26,5 @@ functions:
 custom:
   schedule:
     DAILY: 'cron(30 0 * * ? *)'
-    MONTHLY: 'cron(30 0 1 * ? *)'
-  granularity: ${opt:granularity, 'DAILY'}
+    MONTHLY: 'cron(0 0 3 * ? *)'
+  granularity: ${opt:granularity, 'MONTHLY'}
