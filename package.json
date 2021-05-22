@@ -1,0 +1,35 @@
+{
+  "private": true,
+  "scripts": {
+    "cdk": "cdk",
+    "test": "jest --passWithNoTests"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-events": "1.105.0",
+    "@aws-cdk/aws-events-targets": "1.105.0",
+    "@aws-cdk/aws-iam": "1.105.0",
+    "@aws-cdk/aws-lambda-nodejs": "1.105.0",
+    "@aws-cdk/aws-logs": "1.105.0",
+    "@aws-cdk/core": "1.105.0",
+    "@slack/webhook": "^6.0.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node14": "^1.0.0",
+    "@types/aws-lambda": "^8.0.0",
+    "@types/axios": "^0.14.0",
+    "@types/jest": "^26.0.0",
+    "@types/node": "^14.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.0.0",
+    "@typescript-eslint/parser": "^4.0.0",
+    "aws-cdk": "1.105.0",
+    "aws-sdk": "2.804.0",
+    "esbuild": "latest",
+    "eslint": "^7.0.0",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-jest": "^24.0.0",
+    "jest": "^26.0.0",
+    "ts-jest": "^26.0.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.0"
+  }
+}
