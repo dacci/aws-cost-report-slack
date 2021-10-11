@@ -5,12 +5,12 @@
     "test": "jest --passWithNoTests"
   },
   "dependencies": {
-    "@aws-cdk/aws-events": "1.105.0",
-    "@aws-cdk/aws-events-targets": "1.105.0",
-    "@aws-cdk/aws-iam": "1.105.0",
-    "@aws-cdk/aws-lambda-nodejs": "1.105.0",
-    "@aws-cdk/aws-logs": "1.105.0",
-    "@aws-cdk/core": "1.105.0",
+    "@aws-cdk/aws-events": "1.127.0",
+    "@aws-cdk/aws-events-targets": "1.127.0",
+    "@aws-cdk/aws-iam": "1.127.0",
+    "@aws-cdk/aws-lambda-nodejs": "1.127.0",
+    "@aws-cdk/aws-logs": "1.127.0",
+    "@aws-cdk/core": "1.127.0",
     "@slack/webhook": "^6.0.0"
   },
   "devDependencies": {
@@ -21,7 +21,7 @@
     "@types/node": "^14.0.0",
     "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^4.0.0",
-    "aws-cdk": "1.105.0",
+    "aws-cdk": "1.127.0",
     "aws-sdk": "2.804.0",
     "esbuild": "latest",
     "eslint": "^7.0.0",
