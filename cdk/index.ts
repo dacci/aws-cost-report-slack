@@ -1,6 +1,7 @@
 import { Rule, Schedule } from '@aws-cdk/aws-events';
 import { LambdaFunction } from '@aws-cdk/aws-events-targets';
 import { PolicyStatement } from '@aws-cdk/aws-iam';
+import { Architecture } from '@aws-cdk/aws-lambda';
 import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
 import { LogGroup, RetentionDays } from '@aws-cdk/aws-logs';
 import { App, CfnParameter, Duration, RemovalPolicy, Stack } from '@aws-cdk/core';
@@ -40,9 +41,7 @@ const handler = new NodejsFunction(stack, 'Handler', {
     GRANULARITY: granularity,
     NODE_OPTIONS: '--enable-source-maps',
   },
-});
-
-handler.configureAsyncInvoke({
+  architecture: Architecture.ARM_64,
   maxEventAge: Duration.seconds(60),
   retryAttempts: 0,
 });
