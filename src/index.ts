@@ -32,7 +32,7 @@ export const handler: ScheduledHandler = async () => {
 
   const total = groups.reduce((total, group) => total + group.value, 0);
   const message: IncomingWebhookSendArguments = {
-    text: `Yesterday's cost was ${utils.round(total, 4)} USD.`,
+    text: `${GRANULARITY === 'DAILY' ? 'Yesterday' : 'Last month'}'s cost was ${utils.round(total, 4)} USD.`,
     blocks: [
       {
         type: 'section',
