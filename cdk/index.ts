@@ -2,7 +2,7 @@ import { App, CfnParameter, Duration, RemovalPolicy, Stack } from 'aws-cdk-lib';
 import { Rule, Schedule } from 'aws-cdk-lib/aws-events';
 import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
 import { PolicyStatement } from 'aws-cdk-lib/aws-iam';
-import { Architecture } from 'aws-cdk-lib/aws-lambda';
+import { Architecture, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 
@@ -31,6 +31,7 @@ const webhookUrl = new CfnParameter(stack, 'WebhookURL');
 
 const handler = new NodejsFunction(stack, 'Handler', {
   entry: 'src/index.ts',
+  runtime: Runtime.NODEJS_16_X,
   bundling: {
     minify: true,
     sourceMap: true,
