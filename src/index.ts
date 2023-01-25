@@ -1,28 +1,29 @@
 import type { ScheduledHandler } from 'aws-lambda';
 
 import { IncomingWebhook, IncomingWebhookSendArguments } from '@slack/webhook';
-import { CostExplorer } from 'aws-sdk';
+import { CostExplorerClient, GetCostAndUsageCommand } from '@aws-sdk/client-cost-explorer';
 import * as utils from './utils';
 
 const { WEBHOOK_URL, GRANULARITY } = process.env;
 
-export const explorer = new CostExplorer({ region: 'us-east-1' });
+export const explorer = new CostExplorerClient({ region: 'us-east-1' });
 export const webhook = new IncomingWebhook(WEBHOOK_URL ?? '');
 
 export const handler: ScheduledHandler = async () => {
-  const groups = await explorer.getCostAndUsage({
-    TimePeriod: utils.getTimePeriod(GRANULARITY ?? ''),
-    Granularity: GRANULARITY,
-    Metrics: [
-      'AmortizedCost',
-    ],
-    GroupBy: [
-      {
-        Type: 'DIMENSION',
-        Key: 'SERVICE',
-      },
-    ],
-  }).promise()
+  const groups = await explorer
+    .send(new GetCostAndUsageCommand({
+      TimePeriod: utils.getTimePeriod(GRANULARITY ?? ''),
+      Granularity: GRANULARITY,
+      Metrics: [
+        'AmortizedCost',
+      ],
+      GroupBy: [
+        {
+          Type: 'DIMENSION',
+          Key: 'SERVICE',
+        },
+      ],
+    }))
     .then((result) => result.ResultsByTime?.[0].Groups)
     .then((groups) => groups?.map(utils.transformGroup))
     .then((groups) => groups?.filter(utils.nonZeroGroupOnly))

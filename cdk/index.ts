@@ -31,7 +31,7 @@ const webhookUrl = new CfnParameter(stack, 'WebhookURL');
 
 const handler = new NodejsFunction(stack, 'Handler', {
   entry: 'src/index.ts',
-  runtime: Runtime.NODEJS_16_X,
+  runtime: Runtime.NODEJS_18_X,
   bundling: {
     minify: true,
     sourceMap: true,

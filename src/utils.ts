@@ -1,5 +1,5 @@
 import type { MrkdwnElement, PlainTextElement } from '@slack/types';
-import type { DateInterval, Granularity, Group } from 'aws-sdk/clients/costexplorer';
+import type { DateInterval, Group } from '@aws-sdk/client-cost-explorer';
 
 export interface CostGroup {
   key: string;
@@ -7,7 +7,7 @@ export interface CostGroup {
   text: string;
 }
 
-export function getTimePeriod(granularity: Granularity): DateInterval {
+export function getTimePeriod(granularity: string): DateInterval {
   let start: Date;
   let end = new Date();
 
