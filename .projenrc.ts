@@ -17,7 +17,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
     filename: '',
   },
 
-  cdkVersion: '2.74.0',
+  cdkVersion: '2.83.1',
   deps: [
     '@aws-sdk/client-cost-explorer',
     '@slack/webhook',
