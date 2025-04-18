@@ -26,11 +26,10 @@ exports[`Snapshot 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "611351c45558ce06b16cc7cafd60150b2ff789bc5ea9be07614cb5e7adba8ff3.zip",
+          "S3Key": "d4abcb9f61041b79aa1dbfe6727cb6888e1bc37793a2dc5f154265c4afc26325.zip",
         },
         "Environment": {
           "Variables": {
-            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "GRANULARITY": "MONTHLY",
             "NODE_OPTIONS": "--enable-source-maps",
             "WEBHOOK_URL": {
