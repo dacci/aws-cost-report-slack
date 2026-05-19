@@ -1,4 +1,4 @@
-import { awscdk } from 'projen';
+import { awscdk, javascript } from 'projen';
 import { JobPermission } from 'projen/lib/github/workflows-model';
 
 const project = new awscdk.AwsCdkTypeScriptApp({
@@ -25,6 +25,8 @@ const project = new awscdk.AwsCdkTypeScriptApp({
     '@slack/webhook',
     '@types/aws-lambda',
   ],
+  packageManager: javascript.NodePackageManager.PNPM,
+  pnpmVersion: '11.0.0',
 });
 
 const deploy = project.github?.addWorkflow('deploy');
@@ -45,20 +47,23 @@ deploy?.addJob('deploy', {
       uses: 'actions/checkout@v6',
     },
     {
+      run: 'corepack enable',
+    },
+    {
       name: 'Setup Node.js',
       uses: 'actions/setup-node@v6',
       with: {
         'node-version': 24,
-        'cache': 'yarn',
+        'cache': 'pnpm',
       },
     },
     {
       name: 'Install dependencies',
-      run: 'yarn install',
+      run: 'pnpm install --frozen-lockfile',
     },
     {
       name: 'Run tests',
-      run: 'yarn test',
+      run: 'pnpm test',
     },
     {
       name: 'Configure AWS credentials',
@@ -70,7 +75,7 @@ deploy?.addJob('deploy', {
     },
     {
       name: 'Deploy',
-      run: 'yarn cdk deploy --ci --require-approval never',
+      run: 'pnpm cdk deploy --ci --require-approval never',
     },
   ],
 });
